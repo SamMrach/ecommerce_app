@@ -1,0 +1,65 @@
+﻿@model IEnumerable<projet1.ModelBD.client>
+@{
+    ViewBag.Title = "Index";
+    var grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+
+<style type="text/css">
+    table.gridtable {
+        font-family: verdana,arial,sans-serif;
+        font-size: 11px;
+        color: #333333;
+        width:100px;
+        height:60px;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+
+    }
+
+        table.gridtable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+
+        table.gridtable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+</style>
+
+<div col-md-12>
+    <div style="font-weight:bold;">
+        Customer List
+    </div>
+
+    @using (Html.BeginForm("AddFavori", "Favori", FormMethod.Post))
+    {
+        @grid.GetHtml(
+        tableStyle: "gridtable",
+        columns:
+            grid.Columns(
+
+        @*Here I Will Add Checkbox Column*@
+grid.Column(format:@<text><input type="checkbox" name="ids" value="@item.id" /></text>, header: "Select"),
+grid.Column("nom", "Nom"),
+grid.Column("prenom", "Prenom"),
+grid.Column("email", "Email"),
+grid.Column("tel", "Téléphone")
+)
+)
+
+        <input type="submit" value="Ajouter aux favoris" />
+    }
+    <div style="text-align:right">
+        @grid.Pager(mode: WebGridPagerModes.All)
+    </div>
+
+</div>

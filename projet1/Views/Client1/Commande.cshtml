@@ -1,0 +1,170 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Commande";
+    Layout = "~/Views/Shared/_ClientLiyout.cshtml";
+}
+
+}
+@section Scripts
+{
+    <script src="~/Scripts/commande.js" ></script>
+}
+<div class="commandes_container">
+    @foreach (var commande in Model.Commandes)
+    {
+      
+      <div class="product_container">
+            @{
+                ModelBD db = new ModelBD();
+                int id = commande.reference_cmd;
+                var commande2 = db.commandes_produits.Where(p => p.cmd_id == id).FirstOrDefault();
+            }
+        <img src="@commande2.produit.ImagePath.Replace("~","")" />
+        <form id="@commande.label" action="/client1/details"></form>
+        <form id="@commande.reference_cmd" action="/client1/reclamer"></form>
+        <div class="sub_container">
+            <h4>@commande.label</h4>
+            <div>
+                <h5>Total en MAD @commande.montant</h5> <button class="details_btn">Details</button>
+            </div>
+
+            <button type="submit" class="btn" name="id" value="@commande.reference_cmd" form="@commande.reference_cmd">reclamer</button>
+        </div>
+    </div>
+        <div class="details_container">
+            <div class="head">Les articles</div>
+            <div class="articles_container">
+                <div class="article">
+                    <h4>Produit</h4>
+                    <h4>Prix</h4>
+                    <h4>Quantite</h4>
+                    <h4>Subtotal</h4>
+                </div>
+                @foreach (var commande_produit in Model.commande_produits)
+                {
+                    if (commande.reference_cmd == commande_produit.cmd_id)
+                    {
+                        <div class="article">
+                            <h4>@commande_produit.produit.title</h4>
+                            <h4>@commande_produit.produit.prix</h4>
+                            <h4>@commande_produit.quantity</h4>
+                            @TempData["subtotal"]=@commande_produit.quantity * @commande_produit.produit.prix;
+                            <h4>@(commande_produit.quantity * commande_produit.produit.prix)</h4>
+                        </div>
+                    }
+
+                }
+                <!--
+                                <div class="article">
+                                    <h4>Produit</h4>
+                                    <h4>Prix</h4>
+                                    <h4>Quantite</h4>
+                                    <h4>Subtotal</h4>
+                                </div>
+                                <div class="article">
+                                    <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                    <h4>15 MAD</h4>
+                                    <h4>2</h4>
+                                    <h4>30 MAD</h4>
+                                </div>
+                                <div class="article">
+                                    <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                    <h4>15 MAD</h4>
+                                    <h4>2</h4>
+                                    <h4>30 MAD</h4>
+                                </div>
+                                <div class="article">
+                                    <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                    <h4>15 MAD</h4>
+                                    <h4>2</h4>
+                                    <h4>30 MAD</h4>
+                                </div>
+                -->
+            </div>
+        </div>
+    }
+    <!--
+    <div class="product_container">
+        <img src="~/Content/resources/prduct1.png" />
+        <div class="sub_container">
+            <h4>Anti bruit 10 bouchons doreilles en Silicone 5 paires</h4>
+            <div>
+                <h5>Total en MAD :34,60</h5> <button class="details_btn">Details</button>
+            </div>
+        </div>
+    </div>
+    <div class="details_container">
+        <div class="head">Les articles</div>
+        <div class="articles_container">
+            <div class="article">
+                <h4>Produit</h4>
+                <h4>Prix</h4>
+                <h4>Quantite</h4>
+                <h4>Subtotal</h4>
+            </div>
+            <div class="article">
+                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                <h4>15 MAD</h4>
+                <h4>2</h4>
+                <h4>30 MAD</h4>
+            </div>
+            <div class="article">
+                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                <h4>15 MAD</h4>
+                <h4>2</h4>
+                <h4>30 MAD</h4>
+            </div>
+            <div class="article">
+                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                <h4>15 MAD</h4>
+                <h4>2</h4>
+                <h4>30 MAD</h4>
+            </div>
+        </div>
+    </div>
+
+     <div class="product_container">
+         <img src="~/Content/resources/prduct1.png" />
+         <div class="sub_container">
+             <h4>Anti bruit 10 bouchons doreilles en Silicone 5 paires</h4>
+             <div>
+                 <h5>Total en MAD :34,60</h5> <button class="details_btn">Details</button>
+             </div>
+         </div>
+     </div>
+     <div class="details_container">
+         <div class="head">Les articles</div>
+         <div class="articles_container">
+             <div class="article">
+                 <h4>Produit</h4>
+                 <h4>Prix</h4>
+                 <h4>Quantite</h4>
+                 <h4>Subtotal</h4>
+             </div>
+             <div class="article">
+                 <h4>Anti bruit 10 bouchons doreilles e</h4>
+                 <h4>15 MAD</h4>
+                 <h4>2</h4>
+                 <h4>30 MAD</h4>
+             </div>
+             <div class="article">
+                 <h4>Anti bruit 10 bouchons doreilles e</h4>
+                 <h4>15 MAD</h4>
+                 <h4>2</h4>
+                 <h4>30 MAD</h4>
+             </div>
+             <div class="article">
+                 <h4>Anti bruit 10 bouchons doreilles e</h4>
+                 <h4>15 MAD</h4>
+                 <h4>2</h4>
+                 <h4>30 MAD</h4>
+             </div>
+         </div>
+     </div>
+
+
+    -->
+</div>
+
+
+

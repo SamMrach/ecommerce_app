@@ -1,0 +1,65 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_ClientLiyout.cshtml";
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/message.js" )"></script>
+}
+<div class="messages_container">
+    <ul>
+        <li>
+            @foreach (var convo in Model.conversations)
+            {
+
+
+                <div class="chatList">
+                    <div class="img">
+                        <i class="fa fa-circle"></i>
+                        <img src="~/Content/resources/icon.png" class="mCS_img_loaded">
+                    </div>
+                    <div class="desc">
+                        <small class="time">@convo.LastMessageDate</small>
+                        <h5>@convo.proprietaire.nom @convo.proprietaire.prenom</h5>
+                        <small>@convo.LastMessage</small>
+                        <button class="toggle_chat">
+                            <img src="~/Content/resources/open_arrow.png" />
+                        </button>
+                    </div>
+                </div>
+                <div class="chat_body">
+                    @foreach (var message in Model.messages)
+                    {
+                        if (message.conversationId == convo.id)
+                        {
+                            if (message.fromClient)
+                            {
+                                <div class="message-sent">
+                                    @message.text
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="message-recieved">
+                                    @message.text
+                                </div>
+                            }
+                        }
+                    }
+                    <form class="enter_message" action="/client1/createMessage">
+                        <input class="input_container" type="text" placeholder="type a message" name="text" />
+                        <button name="conversationId" value="@convo.id"><img src="~/Content/resources/sendbtn.png" /> </button>
+
+                    </form>
+
+                </div>
+            }
+        </li>
+
+    </ul>
+</div>
+
+
+

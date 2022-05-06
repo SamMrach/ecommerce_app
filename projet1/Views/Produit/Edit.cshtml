@@ -1,0 +1,145 @@
+﻿@model projet1.ModelBD.produit
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<div class="col-md-6 offset-4">
+    <div style="text-align:center">
+        <div class="card card-primary">
+
+            <div class="card-header">
+                <h3 class="card-title" style="text-align:center">Ajout d'un produit</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            @using (Html.BeginForm("Edit1", "Produit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+        <div class="card-body">
+
+            <div class="form-group">
+                <label>Libellé Produit</label>
+                @Html.TextBoxFor(model => model.title, new { @class = "form-control", required = "required" })
+            </div>
+            @Html.HiddenFor(a => a.ref_Id)
+            <div class="form-group">
+                <label>Description:</label>
+                @Html.TextBoxFor(model => model.description, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="form-group">
+                <label> selectionner la Catégorie</label>
+                @{
+                    ModelBD db = new ModelBD();
+                    var categorie = db.categories.OrderBy(a => a.cat_Id).ToList();
+                }
+
+                <select class="form-control" name="CategorieId" id="CategorieId">
+                    @foreach (var item in categorie)
+                    {
+                        if (Model.CategorieId == item.cat_Id)
+                        {
+                            <option value=@item.cat_Id selected>@item.name</option>
+                        }
+                        else
+                        {
+                            <option value=@item.cat_Id>@item.name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>séléctionner le propriétaire de produit:</label>
+                @{
+
+                    var utilisateur = db.utlisateurs.OrderBy(a => a.id).ToList();
+                }
+
+                <select class="form-control" name="utilisateurid" id="utilisateurid">
+                    @foreach (var item in utilisateur)
+                    {
+                        if (Model.utilisateurId == item.id)
+                        {
+                            <option value=@item.id selected>@item.nom @item.prenom</option>
+                        }
+                        else
+                        {
+                            <option value=@item.id>@item.nom @item.prenom</option>
+                        }
+
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <prix>le Prix:</prix>
+                @Html.TextBoxFor(model => model.prix, new { @class = "form-control", required = "required", type = "number" })
+            </div>
+            <div class="form-group">
+                <prix>la Quantité:</prix>
+                @Html.TextBoxFor(model => model.QtéStock, new { @class = "form-control", required = "required", type = "number" })
+            </div>
+            <div class="form-group">
+                <label>choisir une photo</label>
+                <div class="custom-file">
+                    <input type="file" name="ImageFile" class="custom-file-input" accept=".jpg, .png, .gif" id="idImageProduit" onchange="previewPicture(this)"  />
+                    @*@Html.ValidationMessageFor(model => model.ImageFile, "", new { @class = "text-danger" })*@
+                    <label class="custom-file-label" for="idImageProduit">@Model.ImagePath</label>
+                </div>
+                <!--<div class="col-md-10">-->
+                @*@Html.TextBoxFor(model => model.ImageFile, new { @class = "form-control", required = "required", type = "file", @onchange = "previewPicture(this)" })*@
+                <!--<input type="file" name="ImageFile" value="jeep.jpg" accept=".jpg, .png, .gif" id="idImageProduit" onchange="previewPicture(this)" value=@Model.ImageFile required />
+        </div>-->
+            </div>
+            <img alt="" id="image" src="@Url.Content(Model.ImagePath)" name="ImagePath" style="max-width: 200px; margin-top: 10px;">
+            @*@Html.HiddenFor(a => a.ImagePath)*@
+
+
+
+            <script type="text/javascript">
+                // L'image img#image
+                var image = document.getElementById("image");
+
+                // La fonction previewPicture
+                var previewPicture = function (e) {
+
+                    // e.files contient un objet FileList
+                    const [ImageFile] = e.files
+
+                    // "picture" est un objet File
+                    if (ImageFile) {
+                        // On change l'URL de l'image
+                        image.src = URL.createObjectURL(ImageFile)
+                    }
+                }
+            </script>
+            @*<div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="exampleInputFile">
+                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <span class="input-group-text">Upload</span>
+                </div>
+            </div>
+        </div>*@
+            @*<div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>*@
+        </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

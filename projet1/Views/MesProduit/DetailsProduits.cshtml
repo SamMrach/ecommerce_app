@@ -1,0 +1,125 @@
+﻿@model projet1.ModelBD.produit
+@{
+    ViewBag.Title = "DetailsProduits";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="m-0 text-dark"> Détails</h3>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Tableau de board", "Index", "HomeProp")
+                    </li>
+                    <li class="breadcrumb-item ">
+                        @Html.ActionLink("Mes Produits", "Mesproduits", "MesProduit")
+                    </li>
+                    <li class="breadcrumb-item active">Détails de produits</li>
+                </ol>
+            </div> <!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+@Html.HiddenFor(model => model.ref_Id)
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <h3 class="d-inline-block d-sm-none">@Model.title</h3>
+        <div class="col-12">
+            <img src="@Url.Content(Model.ImagePath)" class="product-image" alt="Product Image">
+        </div>
+        <div class="col-12 product-image-thumbs">
+            <div class="product-image-thumb active"><img src="~/FrontEnd/dist/img/prod-1.jpg" alt="Product Image"></div>
+            <div class="product-image-thumb"><img src="~/FrontEnd/dist/img/prod-2.jpg" alt="Product Image"></div>
+            <div class="product-image-thumb"><img src="~/FrontEnd/dist/img/prod-3.jpg" alt="Product Image"></div>
+            <div class="product-image-thumb"><img src="~/FrontEnd/dist/img/prod-4.jpg" alt="Product Image"></div>
+            <div class="product-image-thumb"><img src="~/FrontEnd/dist/img/prod-5.jpg" alt="Product Image"></div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6">
+        <h3 class="my-3">@Model.title</h3>
+        <p>@Model.description</p>
+
+        <hr>
+        <h4>Available Colors</h4>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-default text-center active">
+                <input type="radio" name="color_option" id="color_option1" autocomplete="off" checked="">
+                Green
+                <br>
+                <i class="fas fa-circle fa-2x text-green"></i>
+            </label>
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option2" autocomplete="off">
+                Blue
+                <br>
+                <i class="fas fa-circle fa-2x text-blue"></i>
+            </label>
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option3" autocomplete="off">
+                Purple
+                <br>
+                <i class="fas fa-circle fa-2x text-purple"></i>
+            </label>
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option4" autocomplete="off">
+                Red
+                <br>
+                <i class="fas fa-circle fa-2x text-red"></i>
+            </label>
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option5" autocomplete="off">
+                Orange
+                <br>
+                <i class="fas fa-circle fa-2x text-orange"></i>
+            </label>
+        </div>
+
+        <h4 class="mt-3">Size <small>Please select one</small></h4>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option1" autocomplete="off">
+                <span class="text-xl">S</span>
+                <br>
+                Small
+            </label>
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option1" autocomplete="off">
+                <span class="text-xl">M</span>
+                <br>
+                Medium
+            </label>
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option1" autocomplete="off">
+                <span class="text-xl">L</span>
+                <br>
+                Large
+            </label>
+            <label class="btn btn-default text-center">
+                <input type="radio" name="color_option" id="color_option1" autocomplete="off">
+                <span class="text-xl">XL</span>
+                <br>
+                Xtra-Large
+            </label>
+        </div>
+
+        <div class="bg-gray py-2 px-3 mt-4">
+            <h2 class="mb-0">
+               Prix Unitaire
+            </h2>
+            <h4 class="mt-0">
+                <small>@Model.prix </small>
+            </h4>
+        </div>
+
+     
+
+ 
+
+    </div>
+</div>
+

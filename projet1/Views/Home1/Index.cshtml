@@ -1,0 +1,141 @@
+﻿
+@model IEnumerable<ModelBD.produit>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<html>
+<head>
+    <title>Home</title>
+    <script src="~/Scripts/home.js" defer></script>
+    <link rel="stylesheet" href="~/Content/home.css" />
+</head>
+<body>
+    <header class="hero-section">
+        <div class="content">
+            <img src="~/Content/resources/light-logo.png" class="logo" alt="">
+            <p class="sub-heading">best fashion collection of all time</p>
+        </div>
+    </header>
+    <section class="product">
+        <h2 class="product-category">New Offers</h2>
+        <button class="pre-btn"><img src="~/Content/resources/arrow.png" alt=""></button>
+        <button class="nxt-btn"><img src="~/Content/resources/arrow.png" alt=""></button>
+        <div class="product-container">
+            @foreach (var item in Model)
+            {
+                <div class="product-card">
+                    <form action="/Home1/Product" id="open_product">
+                    </form>
+                    <div class="product-image">
+                        <span class="discount-tag">50% off</span>
+                        <img src="@item.ImagePath.Replace("~","")" class="product-thumb" alt="">
+
+                        <button type="submit" form="open_product" name="id" value="@item.ref_Id" class="card-btn" formtarget="_blank">ouvrir</button>
+                    </div>
+                    <div class="product-info">
+
+                        <p class="product-short-des">@item.title</p>
+                        <span class="price">$@item.prix</span><span class="actual-price">${@item.prix +20}</span>
+                    </div>
+                </div>
+            }
+            <!--
+
+
+             <div class="product-card">
+                 <div class="product-image">
+                     <span class="discount-tag">50% off</span>
+                     <img src="~/Content/resources/card2.png" class="product-thumb" alt="">
+                     <button class="card-btn">add to whislist</button>
+                 </div>
+                 <div class="product-info">
+
+                     <p class="product-short-des">a short line about the cloth..</p>
+                     <span class="price">$20</span><span class="actual-price">$40</span>
+                 </div>
+             </div>
+             <div class="product-card">
+                 <div class="product-image">
+                     <span class="discount-tag">50% off</span>
+                     <img src="~/Content/resources/card3.png" class="product-thumb" alt="">
+                     <button class="card-btn">add to whislist</button>
+                 </div>
+                 <div class="product-info">
+
+                     <p class="product-short-des">a short line about the cloth..</p>
+                     <span class="price">$20</span><span class="actual-price">$40</span>
+                 </div>
+             </div>
+             <div class="product-card">
+                 <div class="product-image">
+                     <span class="discount-tag">50% off</span>
+                     <img src="~/Content/resources/card4.png" class="product-thumb" alt="">
+                     <button class="card-btn">add to whislist</button>
+                 </div>
+                 <div class="product-info">
+
+                     <p class="product-short-des">a short line about the cloth..</p>
+                     <span class="price">$20</span><span class="actual-price">$40</span>
+                 </div>
+             </div>
+             <div class="product-card">
+                 <div class="product-image">
+                     <span class="discount-tag">50% off</span>
+                     <img src="~/Content/resources/card5.png" class="product-thumb" alt="">
+                     <button class="card-btn">add to whislist</button>
+                 </div>
+                 <div class="product-info">
+
+                     <p class="product-short-des">a short line about the cloth..</p>
+                     <span class="price">$20</span><span class="actual-price">$40</span>
+                 </div>
+             </div>
+             <div class="product-card">
+                 <div class="product-image">
+                     <span class="discount-tag">50% off</span>
+                     <img src="~/Content/resources/card6.png" class="product-thumb" alt="">
+                     <button class="card-btn">add to whislist</button>
+                 </div>
+                 <div class="product-info">
+
+                     <p class="product-short-des">a short line about the cloth..</p>
+                     <span class="price">$20</span><span class="actual-price">$40</span>
+                 </div>
+             </div>
+             <div class="product-card">
+                 <div class="product-image">
+                     <span class="discount-tag">50% off</span>
+                     <img src="~/Content/resources/card7.png" class="product-thumb" alt="">
+                     <button class="card-btn">add to whislist</button>
+                 </div>
+                 <div class="product-info">
+
+                     <p class="product-short-des">a short line about the cloth..</p>
+                     <span class="price">$20</span><span class="actual-price">$40</span>
+                 </div>
+             </div>
+            -->
+        </div>
+    </section>
+    <section class="collection-container">
+        <button value="Women Apparel" name="category" type="submit" form="search_form" class="collection">
+            <img src="~/Content/resources/women-collection.png" alt="">
+            <p class="collection-title">women <br> apparels</p>
+        </button>
+        <button type="submit" name="category" form="search_form" value="Men Apparel" class="collection">
+            <img src="~/Content/resources/men-collection.png" alt="">
+            <p class="collection-title">men <br> apparels</p>
+        </button>
+        <button value="Men's Accessories" name="category" type="submit" form="search_form" class="collection">
+            <img src="~/Content/resources/accessories-collection.png" alt="">
+            <p class="collection-title">accessories</p>
+        </button>
+        <form action="/Home1/searchByCategory" id="search_form" method="post">
+            <input type="hidden" name="byCategory" value="1" />
+        </form>
+    </section>
+</body>
+</html>
+

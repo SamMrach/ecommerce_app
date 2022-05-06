@@ -1,0 +1,36 @@
+﻿@model projet1.ModelBD.categorie
+@{
+    ViewBag.Title = "Delete";
+    Layout = null;
+}
+
+@using (Html.BeginForm("Delete", "Categorie", FormMethod.Post, new { id = "popupForm" }))
+{
+    @Html.HiddenFor(a => a.cat_Id)
+
+    <div style="text-align:center">
+        <div class="form-group">
+            <label> Numero de catégorie </label>
+            <p>@Model.cat_Id</p>
+        </div>
+
+        <div class="form-group">
+            <label>Nom de  catégorie</label>
+            <p>@Model.name</p>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <p>@Model.description</p>
+        </div>
+
+       
+
+        <p style="margin-top:10px">Etes-vous sur de vouloir supprimer la catégorie numero @Model.cat_Id?</p>
+
+        <div style="text-align:center">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
+    </div>
+}
+

@@ -1,0 +1,182 @@
+﻿
+@model IEnumerable<projet1.ModelBD.produit>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Tableau de board</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Mon Espace</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row ">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-shopping-bag"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Totale de Produits </span>
+                        <span class="info-box-number">
+
+                            @{ 
+                                var Sproduct = Model.ToList().Count();
+                             
+                            }
+                            @Sproduct
+                            <small>Produit</small>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-danger elevation-1"><i class="fab fa-shopify"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Produits Vendus</span>
+                        <span class="info-box-number">
+                            @{
+                               
+                                var Pvendus = Model.Where(x=>x.statusP== ModelBD.produit.StatusProduit.Vendu).ToList().Count();
+
+                            }
+                            @Pvendus
+                            <small>Produit</small>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"> A la vente</span>
+                        <span class="info-box-number">
+                            @{
+                               
+                                var Pnonvendus = Model.Where(x => x.statusP == ModelBD.produit.StatusProduit.NonVendu).ToList().Count();
+
+                            }
+                            @Pnonvendus
+                            <small>Produit</small>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-euro-sign"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Mes Renvenus</span>
+                        <span class="info-box-number">
+                            @{
+                                var p = Model.Where(x => x.statusP == ModelBD.produit.StatusProduit.Vendu).ToList();
+                                var Revenu = 0.00;
+                                foreach(var i in p)
+                                {
+                                    Revenu = Revenu + i.prix;
+                                }
+                            }
+                            @Revenu
+                            <small>Dhs</small>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+
+        <div class="col-sm-6">
+            <h5 class="m-0 text-dark"><i class="far fa-clock"></i> Produits Récents</h5>
+        </div>
+        @*<div class="card-header border-0">
+            <h1 class="card-title">Produits Récents</h1>
+        </div>*@
+        <div class="card card-secondary ">
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped table-valign-middle">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Prix</th>
+                            <th>Etat</th>
+                            <th>Stocke</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var ProduitDay = Model.Where(x => x.dateAjout.Day.Equals(DateTime.Now.Day) && x.dateAjout.Month.Equals(DateTime.Now.Month) && x.dateAjout.Year.Equals(DateTime.Now.Year)).ToList();
+                            foreach (var item in ProduitDay)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@Url.Content(item.ImagePath)" alt="Product 1" class="img-circle img-size-32 mr-2">
+                                        @item.title
+                                    </td>
+                                    <td>@item.prix</td>
+                                    <td>@item.statusP</td>
+                                    <td>@item.QtéStock</td>
+                                    @*<td>
+                                        <small class="text-success mr-1">
+                                            <i class="fas fa-arrow-up"></i>
+                                            12%
+                                        </small>
+                                        12,000 Sold
+                                    </td>*@
+                                    @*<td>
+                                        <a href="#" class="text-muted">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                    </td>*@
+                                </tr>
+                            }
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+
+

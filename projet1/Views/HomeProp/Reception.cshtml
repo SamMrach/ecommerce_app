@@ -1,0 +1,53 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Reception";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Bîte de réception</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">
+                        @Html.ActionLink("Tableau de board", "Index", "HomeProp")
+                    </li>
+                    <li class="breadcrumb-item active">Messages</li>
+                </ol>
+            </div> <!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+    <div class="container-fluid">
+        @foreach (var convo in Model.conversations)
+        {
+            <div class="card ">
+
+                <a href="@Url.Action("SendMessage", "HomeProp", new { clientId = convo.client.id})" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <img src="~/FrontEnd/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                @convo.client.prenom @convo.client.nom
+                              
+                            </h3>
+                            <p class="text-sm">@convo.LastMessage</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>@convo.LastMessageDate</p>
+                        </div>
+                    </div>
+                    <!-- Message End -->
+                </a>
+              
+            </div>
+        }
+        </div>
+</section>
+        
+

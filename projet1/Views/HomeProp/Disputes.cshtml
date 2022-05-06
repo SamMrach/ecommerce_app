@@ -1,0 +1,152 @@
+﻿
+@model IEnumerable<projet1.ModelBD.reclamation>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+
+}
+@using PagedList.Mvc;
+@using PagedList;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"> Disputes </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">
+                        @Html.ActionLink("Tableau de board", "Index", "HomeProp")
+                    </li>
+                    <li class="breadcrumb-item active">Disputes</li>
+                </ol>
+            </div> <!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+@if (TempData["Decision"] != null)
+{
+    <div class="row">
+        <div class=" col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
+
+        </div>
+        <div class="alert alert-default-danger col-12  col-md-5  align-items-stretch">
+            <strong> Oups ! </strong>@TempData["Decision"]
+        </div>
+    </div>
+
+}
+<!-- /.content-header -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+                        <form class="form-inline ml-3 navbar-white  navbar-light" asp-controller="HomeProp" asp-action="Disputes" method="get">
+                            <div class="input-group input-group-sm">
+                                <input name="search" class="form-control form-control-navbar" type="search" placeholder="Rechercher... " aria-label="Rechercher">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                @*<form asp-controller="reclamation1" asp-action="index" method="get">
+                        <span class="btn-group">
+                            <input type="text" name="surchtext" class="form-control " placeholder="surch " style="width:250px;height:30px;font-size:16px;">
+
+                            &nbsp;&nbsp;
+
+                            <input type="submit" value="rechercher...." class="btn btn-info" style="width:110px;height:30px;font-size:15px;" />
+
+
+                        </span>
+
+                    </form>*@
+            </div>
+            <!-- /.card-header -->
+
+            <div class="card-body">
+                <table class="table table-striped  table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>status</th>
+                            <th>Objet de reclamation</th>
+                            <th>Reclamation</th>
+                            <th>Numero de commande</th>
+                            <th>Client</th>
+                            <th>Action</th>
+                            <th>Accepter</th>
+                            <th>Refuser</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.id</td>
+                                @if (item.status == "Acceptée")
+                                {
+                                    <td> <i class="fas success fa-check"></i> </td>
+                                }
+                                else if (item.status == "Refusée")
+                                {
+                                    <td> <i class="fas danger fa-times"></i> </td>
+                                }
+                                else
+                                {
+                                    <td>  <i class="far fa-clock"></i> </td>
+
+                                }
+
+                                <td>@item.header</td>
+                                <td>@item.text</td>
+                                <td>@item.CommandeId</td>
+                                <td>@item.client.nom @item.client.prenom</td>
+                                <td align="center">
+                                    <a href="@Url.Action("SendMessage", "HomeProp",new { clientId = item.clientId  })" class="text-muted">
+                                        <i class="fas fa-comments"></i>
+                                    </a>
+                                </td>
+                                <td align="center">
+                                    <a href="@Url.Action("AcceptReclamation", "HomeProp",new { id = item.id })" onclick="return confirm(' Voulez-Vous accepter cette réclamation ? ')" class="text-muted">
+                                        <i class="fas fa-check-circle"></i>
+                                    </a>
+                                </td>
+                                <td align="center">
+                                    <a href="@Url.Action("RefuseReclamation", "HomeProp",new { id = item.id  })" onclick="return confirm(' Voulez-Vous refuser cette réclamation ? ')" class="text-muted">
+                                        <i class="fas fa-times-circle"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="card-footer" style="height:80px">
+                    <div class=" col-md-4 offset-10">
+                        @Html.PagedListPager(Model, i => Url.Action("Index", "Reclamation1", new { i }))
+
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</section>
+
+

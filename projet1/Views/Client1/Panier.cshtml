@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ModelBD.panier_produit>
+@{
+    ViewBag.Title = "Panier";
+    ViewBag.somme = 0;
+
+    Layout = "~/Views/Shared/_ClientLiyout.cshtml";
+}
+@section Scripts
+{
+    <script src="~/Scripts/panier.js" defer></script>
+}
+<div class="panier_container">
+    @foreach (var item in Model)
+    {
+        ViewBag.somme += item.produit.prix * item.quantity;
+        <div class="product_container">
+            <img src="@item.produit.ImagePath.Replace("~"," ")" />
+            <div class="sub_container">
+                <h4>@item.produit.title</h4>
+                <div>
+                    <form id="@item.id" action="/client1/updateArticle">
+                        <input type="hidden" name="id" value="@item.id" />
+                    </form>
+                    <input type="number" placeholder="quantité" value="@item.quantity" name="quantity" form="@item.id" />
+
+                    <form action="/Client1/Delete">
+                        <button name="id" value="@item.id">Remove</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    }
+    <!--
+    <div class="product_container">
+        <img src="~/Content/resources/prduct1.png" />
+        <div class="sub_container">
+            <h4>Anti bruit 10 bouchons d'oreilles en Silicone 5 paires</h4>
+            <div>
+                <select>
+                    <option disabled>quantité</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+
+                <button>Remove</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="product_container">
+        <img src="~/Content/resources/product2.png" />
+        <div class="sub_container">
+            <h4>Lampe de travail, Abat-jour Excellent pour Bureau et Maison</h4>
+            <div>
+                <select>
+                    <option disabled>quantité</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <button>Remove</button>
+            </div>
+        </div>
+    </div>
+    <div class="product_container">
+        <img src="~/Content/resources/product3.png" />
+        <div class="sub_container">
+            <h4>3 masques noirs Tissu premium - LAVABLE - tissu certifié IMANOR</h4>
+            <div>
+                <select>
+                    <option disabled>quantité</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <button>Remove</button>
+            </div>
+        </div>
+    </div>
+
+
+    -->
+</div>
+
+

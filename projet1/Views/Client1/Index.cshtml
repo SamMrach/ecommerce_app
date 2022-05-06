@@ -1,0 +1,30 @@
+﻿@model ModelBD.utilisateur
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ClientLiyout.cshtml";
+
+}
+
+
+
+@section Scripts
+{
+    <script src="~/Scripts/compte.js"></script>
+}
+<form class="compte_container" method="post" action="/Client1/Edit">
+    <input type="hidden" name="id" value="@Model.id" />
+    <div class="block">
+        <input id="name" name="nom" type="text" placeholder="votre nom" value="@Model.nom" required />
+    </div>
+    <div class="block">
+        <input id="prenom" name="prenom" type="text" value="@Model.prenom" placeholder="votre prenom" required />
+    </div>
+    <div class="block">
+        <input id="email" name="email" type="text" value="@Model.email" placeholder="votre email" required />
+    </div> <div class="block"> <input name="password" id="password" value="@Model.password" type="text" placeholder="votre password" required /> </div>
+    <div class="block"> <input name="tel" id="tel" type="text" value="@Model.tel" placeholder="votre tel" required /> </div>
+    <div class="block"> <input name="address" id="Address" type="text" value="@Model.address" placeholder="votre Address" required /> </div>
+    <button>sauvegarder</button>
+</form>
+
+

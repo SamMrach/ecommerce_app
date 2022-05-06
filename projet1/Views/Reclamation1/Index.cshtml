@@ -1,0 +1,79 @@
+﻿@model IPagedList<projet1.ModelBD.reclamation>
+@{
+    ViewBag.Title = "Index";
+
+}
+@using PagedList.Mvc;
+@using PagedList;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+@if (TempData["AlertMessage"] != null)
+{
+<div class="row">
+    <div class=" col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
+
+    </div>
+    <div class="alert alert-default-danger col-12  col-md-5  align-items-stretch">
+        @TempData["AlertMessage"]
+    </div>
+</div>}
+<div class="card">
+    <div class="card-header">
+        <form asp-controller="reclamation1" asp-action="index" method="get">
+            <span class="btn-group">
+                <input type="text" name="surchtext" class="form-control " placeholder="surch " style="width:250px;height:30px;font-size:16px;">
+
+                &nbsp;&nbsp;
+
+                <input type="submit" value="rechercher...." class="btn btn-info" style="width:110px;height:30px;font-size:15px;" />
+
+
+            </span>
+
+        </form>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table class="table table-striped  table-bordered">
+            <thead>
+                <tr>
+                    <th>Numero</th>
+                    <th>Objet de reclamation</th>
+                    <th>reclamation</th>
+                    <th>Numero de commande</th>
+                    <th>Nom de client</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int indice = 1;}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.id</td>
+                        <td>@item.header</td>
+                        <td>@item.text</td>
+                        <td>@item.CommandeId</td>
+                        <td>@item.client.nom @item.client.prenom</td>
+                        <td>
+
+                            <a style="color:red;" href="@Url.Action("Delete",new {id=@item.id})"><i class="fas fa-trash-alt" style="font-size:24px"></i></a>
+                        </td>
+                    </tr>
+                    indice++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer" style="height:80px">
+        <div class=" col-md-4 offset-10">
+            @Html.PagedListPager(Model, i => Url.Action("Index", "Reclamation1", new { i }))
+
+        </div>
+    </div>
+</div>
+

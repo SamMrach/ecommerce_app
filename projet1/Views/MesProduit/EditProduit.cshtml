@@ -1,0 +1,137 @@
+﻿
+@model projet1.ModelBD.produit
+@{
+    ViewBag.Title = "EditProduit";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="m-0 text-dark"> Modification de Produit enregistré sous : @Model.title</h3>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Tableau de board", "Index", "HomeProp")
+                    </li>
+                    <li class="breadcrumb-item ">
+                        @Html.ActionLink("Mes Produits", "Mesproduits", "MesProduit")
+                    </li>
+                    <li class="breadcrumb-item active">Modification d Produits</li>
+                </ol>
+            </div> <!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="card card-primary formAjoutPrdt">
+
+    <!-- form start -->
+    @using (Html.BeginForm("EditProduit", "MesProduit", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="card-body">
+        @Html.HiddenFor(model => model.ref_Id)
+        <hr />
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        <div class="form-group row">
+            <label for="idNomProduit" class="col-sm-2 col-form-label">Nom</label>
+            <div class="col-sm-10">
+                <!--input type="text" class="form-control" id="idNomProduit" placeholder="Nom de produit"-->
+                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control", placeholder = "Nom de produit", required = "required" } })
+                @*@Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="idCategorieProduit" class="col-sm-2 col-form-label">Catégorie</label>
+            <div class="col-sm-10">
+                @{
+                    ModelBD db = new ModelBD();
+                    var categorie = db.categories.OrderBy(a => a.cat_Id).ToList();
+                }
+                <select class="form-control" name="CategorieId" id="CategorieId">
+                    @foreach (var item in categorie)
+                    {
+                        <option value=@item.cat_Id>@item.name</option>
+                    }
+                </select>
+
+                @*@Html.ValidationMessageFor(model => model.categorie, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="idPrixProduit" class="col-sm-2 col-form-label">Quantité ajoutée</label>
+            <div class="col-sm-10">
+                <input type="number" name="QteStock" class="form-control" id="idQteProduit" placeholder="La quantité ajoutée au stocke" />
+                @*@Html.ValidationMessageFor(model => model.prix, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="idPrixProduit" class="col-sm-2 col-form-label">Prix</label>
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.prix, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+
+                @*@Html.ValidationMessageFor(model => model.prix, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="idDescptProduits" class="col-sm-2 col-form-label">Description </label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+
+                @*@Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="idImageProduit" class="col-sm-2 col-form-label">Image de produit</label>
+            <div class="col-sm-10">
+
+                <div class="input-group">
+                    <div class="custom-file">
+
+                        <input type="file" name="ImageFile" class="custom-file-input" accept=".jpg, .png, .gif" id="idImageProduit" onchange="previewPicture(this)" />
+                        @*@Html.ValidationMessageFor(model => model.ImageFile, "", new { @class = "text-danger" })*@
+                        <label class="custom-file-label" for="idImageProduit">@Model.ImagePath</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="input-group-text" type="submit" id="">Importer</button>
+                    </div>
+                </div>
+                <img src="@Url.Content(Model.ImagePath)" alt="" id="image" style="max-width: 200px; margin-top: 10px;">
+                <script type="text/javascript">
+                    // L'image img#image
+                    var image = document.getElementById("image");
+
+                    // La fonction previewPicture
+                    var previewPicture = function (e) {
+
+                        // e.files contient un objet FileList
+                        const [ImageFile] = e.files
+
+                        // "picture" est un objet File
+                        if (ImageFile) {
+                            // On change l'URL de l'image
+                            image.src = URL.createObjectURL(ImageFile)
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <center>
+                <button type="submit" class="btn btn-info" name="sub" value="ajouter" style="margin-right:70px">Modifier</button>
+                <button class="btn btn-warning " name="sub" value="annuler" href='@Url.Action("NouveauProduit","MesProduit")'>Annuler</button>
+            </center> <!-- /.card-footer -->
+        </div>
+
+
+
+    }
+</div>
+

@@ -1,0 +1,150 @@
+﻿@model IEnumerable<projet1.ModelBD.message>
+@{
+    ViewBag.Title = "SendMessage";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"> Messagerie</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">
+                        @Html.ActionLink("Tableau de board", "Index", "HomeProp")
+                    </li>
+                    <li class="breadcrumb-item active">Message</li>
+                </ol>
+            </div> <!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card direct-chat direct-chat-secondary">
+            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                <h3 class="card-title">Direct Chat</h3>
+
+                <div class="card-tools">
+
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            @{  int t = 0; int b = 0;}
+            <div class="card-body">
+                @foreach (var item in Model)
+                {
+                   
+                <div class="content container-fluid">
+                    @if (item.fromClient)
+                    {
+                        t++;
+                        if (t == 1)
+                        {
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <div class="direct-chat-timestamp text-center">@item.date</div>
+                                    <span class="direct-chat-name float-left"> @item.conversation.client.prenom @item.conversation.client.nom</span>
+
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="~/FrontEnd/dist/img/user1-128x128.jpg" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text ">
+                                    @item.text
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            b = 0;
+                        }
+                        else if (t > 1)
+                        {
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text ">
+                                    @item.text
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            b = 0;
+                        }
+
+                    }
+                    else
+                    {
+                        b++;
+                        if (b == 1)
+                        {
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-secondary clearfix">
+                                    <div class="direct-chat-timestamp text-center">@item.date</div>
+                                    <span class="direct-chat-name float-right">Vous</span>
+                                    
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="~/FrontEnd/dist/img/user3-128x128.jpg" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text  text-right">
+                                    @item.text
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            t = 0;
+                        }
+                        else if (b > 1)
+                        {
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                
+                                <div class="direct-chat-text text-right ">
+                                    @item.text
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            t = 0;
+                        }
+
+                    }
+
+                </div>
+
+                }
+                <!-- /.direct-chat-pane -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+
+                @{ var v = Model.FirstOrDefault();}
+                @using (Html.BeginForm("Send", "HomeProp", new { clientId = v.conversation.clientId, conversationId = @v.conversationId }, FormMethod.Post))
+                {
+
+                    <div class="input-group">
+                        <input type="text" name="text" placeholder="Votre Message ..." class="form-control">
+                        <span class="input-group-append">
+                            <button type="submit" class="btn btn-secondary">Send</button>
+                        </span>
+                    </div>
+
+                }
+            </div>
+            <!-- /.card-footer-->
+        </div>
+
+
+
+
+    </div>
+</section>
+
+

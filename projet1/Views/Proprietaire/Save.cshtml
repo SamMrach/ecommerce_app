@@ -1,0 +1,50 @@
+﻿@model projet1.ModelBD.proprietaire
+@{
+    ViewBag.Title = "Save";
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Save", "Proprietaire", FormMethod.Post, new { id = "popupForm" }))
+{
+    if (Model != null && Model.id > 0)
+    {
+        @Html.HiddenFor(a => a.id)
+    }
+<div style="align-content:center">
+    <div class="form-group">
+        <label>Nom</label>
+        @Html.TextBoxFor(a => a.nom, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.nom)
+    </div>
+    <div class="form-group">
+        <label>Prenom</label>
+        @Html.TextBoxFor(a => a.prenom, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.prenom)
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        @Html.TextBoxFor(a => a.email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.email)
+    </div>
+    <div class="form-group">
+        <label>Telephone</label>
+        @Html.TextBoxFor(a => a.tel, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.tel)
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        @Html.TextBoxFor(a => a.password, new { @class = "form-control" })
+
+    </div>
+    <div class="form-group">
+        <label>Confirmation de password</label>
+        @Html.TextBoxFor(a => a.passwordComfirm, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.passwordComfirm)
+    </div>
+    <div style="text-align:center">
+        <input type="submit" value="Save" class="btn btn-success" />
+    </div>
+</div>
+}
+

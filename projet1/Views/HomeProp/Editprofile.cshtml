@@ -1,0 +1,107 @@
+﻿@model projet1.ModelBD.utilisateur
+@{
+    ViewBag.Title = "profile";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Modification de profile</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">
+                        @Html.ActionLink("Tableau de board", "Index", "HomeProp")
+                    </li>
+                    <li class="breadcrumb-item active">Mon Profile</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+@using (Html.BeginForm("Editprofile", "HomeProp", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+<div class="card card-secondary card-outline formAjoutPrdt">
+    @Html.HiddenFor(model => model.id)
+    <div class="card-body box-profile">
+        <div class="text-center">
+            <img class=" img-fluid img-circle" src="~/FrontEnd/dist/img/user4-128x128.jpg" alt="User profile picture">
+        </div>
+
+
+        <div class="card-body">
+            <hr />
+            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            <div class="form-group row">
+                <label for="idNomProduit" class="col-sm-2 col-form-label">Nom</label>
+                <div class="col-sm-10">
+                    <!--input type="text" class="form-control" id="idNomProduit" placeholder="Nom de produit"-->
+                    @Html.EditorFor(model => model.nom, new { htmlAttributes = new { @class = "form-control", placeholder = "Votre Nom", required = "required" } })
+                    @*@Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="idNomProduit" class="col-sm-2 col-form-label">Prénom</label>
+                <div class="col-sm-10">
+                    <!--input type="text" class="form-control" id="idNomProduit" placeholder="Nom de produit"-->
+                    @Html.EditorFor(model => model.prenom, new { htmlAttributes = new { @class = "form-control", placeholder = "Votre Prenom", required = "required" } })
+                    @*@Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="idemail" class="col-sm-2 col-form-label">Adresse E-mail</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", Type = "email", placeholder = "Adresse email", required = "required" } })
+                    @*<input type="email" name="address" class="form-control" id="idemail" placeholder="Adresse email" />*@
+                    @*@Html.ValidationMessageFor(model => model.prix, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="idpassword" class="col-sm-2 col-form-label">Mot de passe </label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", Type = "password", placeholder = "Mot de passe", required = "required" } })
+                    @*<input type="password" name="password" id="idpassword" class="form-control" placeholder="Mot de passe" />*@
+                    @*@Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="idpasswordComfirm" class="col-sm-2 col-form-label">Confirmer le mot de passe </label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.passwordComfirm, new { htmlAttributes = new { @class = "form-control", Type = "password", placeholder = "Confirmez votre mot de passe", required = "required" } })
+                    @*<input type="password" name="passwordComfirm" id="idpasswordComfirm" class="form-control" placeholder="Confirmez votre mot de passe" />*@
+                    @*@Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="idTel" class="col-sm-2 col-form-label">Téléphone </label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.tel, new { htmlAttributes = new { @class = "form-control", Type = "tel", placeholder = "Téléphone portable", required = "required" } })
+                    @*<input type="tel" name="tel" id="idTel" class="form-control" placeholder="Téléphone portable" />*@
+                    @*@Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="card-footer">
+
+                <button type="submit" class="btn btn-secondary" name="sub" value="Modifier">Modifier</button>
+                <!-- /.card-footer -->
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+    <!-- /.card-body -->
+</div>
+}
+
+
+
+

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<projet1.ModelBD.historique>
+@{
+    ViewBag.Title = "Historique";
+    Layout = "~/Views/Shared/_PropLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"> Mon historique</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">
+                        @Html.ActionLink("Tableau de board", "Index", "HomeProp")
+                    </li>
+                    <li class="breadcrumb-item active">Historique</li>
+                </ol>
+            </div> <!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-secondary .formAjoutPrdt1 card-body pb-0">
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped table-valign-middle">
+                    @{
+                        ModelBD db = new ModelBD();
+                        string email = System.Web.HttpContext.Current.User.Identity.Name;
+                        var currentUser = db.utlisateurs.Where(p => p.email == email).FirstOrDefault();
+                        var hist = db.historiques.OrderBy(a => a.Id_hist).Where(a => a.utilisateurId == currentUser.id).ToList();
+
+                        var hi = hist.ToList();
+
+                        List<string> t = new List<string>();
+                        foreach (var titem in hi)
+                        {
+
+
+                            var d = titem.dateOperation.ToShortDateString();
+                            if (!t.Contains(d))
+                            {
+                                t.Add(d);
+
+                            }
+
+
+                        }
+                        t.Reverse();
+                        foreach (var item in t)
+                        {
+                            <thead>
+                                <tr>
+                                    <th>@item </th>
+                                </tr>
+                            </thead>
+
+                            //var hitt = db.historiques.Where(x => x.dateOperation.ToString().Equals(item));
+                            var hitt = hist.OrderByDescending(a => a.dateOperation).Where(x=> item.Contains(x.dateOperation.Day.ToString()) && item.Contains(x.dateOperation.Month.ToString()) && item.Contains(x.dateOperation.Year.ToString()));
+
+                            <tbody>
+                               @foreach (var h in hitt)
+                               {
+                                <tr>
+                                    <!--<td>-->
+                                        @*<img src="@Url.Content(item.ImagePath)" alt="Product 1" class="img-circle img-size-32 mr-2">*@
+                                       
+                                    <!--</td>-->
+                                    <td>@h.dateOperation.Hour : @h.dateOperation.Second</td>
+                                    <td>@h.operation</td>
+
+                                    @if (@h.operation.Equals(ModelBD.historique.Operation.Ajout))
+                                    {
+                                        <td>Vous avez ajouter un produit sous le lebellé <b text-muted text-sm> @h.label </b> </td>
+                                    }
+                                    else if (@h.operation.Equals(ModelBD.historique.Operation.Suppression))
+                                    {
+                                        <td>Vous avez supprimer le produit enregistré sous le lebellé<b text-muted text-sm> @h.label </b></td>
+                                    }
+                                    else if (@h.operation.Equals(ModelBD.historique.Operation.Modification))
+                                    {
+                                        if (h.label == "profile")
+                                        {
+                                            <td> Vous avez modifier vos informations personnelles </td>
+                                        }
+                                        else
+                                        {
+                                            <td>Vous avez modifier les informations du produit enregistré sous le lebellé <b text-muted text-sm> @h.label </b></td>
+                                        }
+
+                                    }
+
+                                    <td align="center">
+                                        <a href="@Url.Action("Deletehistorique", "HomeProp",new { id = @h.Id_hist  })" onclick = "return confirm(' Voulez-Vous le Supprimer de l\'historique ? ')" class="text-muted">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                                }
+                            </tbody>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+

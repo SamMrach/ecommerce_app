@@ -1,0 +1,59 @@
+﻿@model ModelBD.commande
+@{
+    ViewBag.Title = "reclamer";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<html>
+<head>
+    <style>
+        .reclamation_cnt {
+            width: 50%;
+            height: 450px;
+            display: block;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            width: 50%;
+            height: 30px;
+            border: none;
+            border-bottom: 1px solid #333;
+            outline: none;
+            margin-bottom:25px;
+               
+        }
+
+        textarea {
+            width: 50%;
+            height: 180px;
+            margin-bottom: 25px;
+            padding:5px;
+        }
+
+        button {
+            width: 280px;
+            height: 40px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+            line-height: 30px;
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form class="reclamation_cnt" action="/client1/reclamer" method="post">
+        <h2>Commande n <span>@Model.reference_cmd</span> </h2>
+        <input type="text" placeholder="titre" name="title" />
+        <textarea name="description" placeholder="decrire votre porblem"></textarea>
+        <button value="@Model.reference_cmd" name="reference_cmd">Envoyer</button>
+        <input type="hidden" name="client_id" value="@Model.clientId" />
+    </form>
+</body>
+</html>

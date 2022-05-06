@@ -1,0 +1,81 @@
+﻿@model projet1.ModelBD.utilisateur
+@{ ViewBag.Title = "profile";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Mon Profile</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">
+                        @Html.ActionLink("Tableau de board", "Index", "Home")
+                    </li>
+                    <li class="breadcrumb-item active">Mon Profile</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@if (TempData["AlertMessage"] != null)
+{
+<div class="row">
+    <div class=" col-12 col-sm-6 col-md-3 d-flex align-items-stretch">
+
+    </div>
+    <div class="alert alert-default-success col-12  col-md-5  align-items-stretch">
+        <strong> succès ! </strong>@TempData["AlertMessage"]
+    </div>
+</div>}
+<section class="content formAjoutPrdt">
+    <div class="container-fluid col-md-6 offset-4">
+        <div class="card card-secondary card-outline">
+            <div class="card-body box-profile">
+                @*<div class="text-center">
+                        <img class="profile-user-img img-fluid img-circle" src="~/FrontEnd/dist/img/user4-128x128.jpg" alt="User profile picture">
+                    </div>*@
+
+                <p class="text-muted text-center"><a href="@Url.Action("Editprofile", "Home", new { id = Model.id})" class="text-muted text-center">Edite<i class="fas fa-pencil-alt"></i></a></p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+
+                    <li class="list-group-item">
+                       
+                        <b>Nom</b> <p class="float-right">@Model.nom</p>
+                    </li>
+                    <li class="list-group-item">
+                       
+                        <b>Prenom</b> <p class="float-right">@Model.prenom</p>
+                    </li>
+                    <li class="list-group-item">
+                        
+                        <b>Adresse Email</b> <p class="float-right">@Model.email</p>
+                    </li>
+                    <li class="list-group-item">
+                      
+                        <b>Mot de passe </b> <p class="float-right">@Model.password</p>
+                    </li>
+                    <li class="list-group-item">
+                      
+                        <b>Numéro de téléphone </b> <p class="float-right">@Model.tel</p>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</section>

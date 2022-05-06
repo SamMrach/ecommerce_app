@@ -1,0 +1,425 @@
+﻿
+@{
+    ViewBag.Title = "_ClientLiyout";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<html>
+<head>
+    <title></title>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" href="~/Content/StyleSheet1.css" />
+    <link rel="stylesheet" href="~/Content/compte.css" />
+    <link rel="stylesheet" href="~/Content/panier.css" />
+    <link rel="stylesheet" href="~/Content/disputes.css" />
+    <style>
+        body {
+        }
+
+        .messages_container {
+            width: 100%;
+            height: 100%;
+        }
+
+            .messages_container ul {
+                width: 100%;
+                height: 100%;
+                list-style: none;
+                padding: 5px 0 0 5px;
+                overflow: auto;
+            }
+
+        li {
+            width: 100%;
+            min-height: 15%;
+            height: fit-content;
+            padding: 5px 0 0 5px;
+            border: none;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+        }
+
+        .messages_container ul li:active {
+        }
+
+        .chatList {
+            width: 100%;
+            height: 63px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .img {
+            width: 60px;
+            height: 60px;
+        }
+
+            .img img {
+                width: 80%;
+                height: 80%;
+            }
+
+        .desc {
+            width: calc(100% - 70px);
+            height: 100%;
+            position: relative;
+        }
+
+            .desc .time {
+                position: absolute;
+                right: 15px;
+                top: 5px;
+                color: black;
+            }
+
+            .desc h5 {
+                margin-top: 6px;
+                line-height: 5px;
+            }
+
+            .desc small {
+                color: black;
+            }
+
+            .desc button {
+                position: absolute;
+                width: 20px;
+                height: 12px;
+                bottom: 20px;
+                right: 15px;
+                cursor: pointer;
+                background: transparent;
+                border: none;
+                outline: none;
+            }
+
+                .desc button img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+        .chat_body {
+            width: 100%;
+            height: 488px;
+            position: relative;
+        }
+
+        .message-sent {
+            width: 80%;
+            height: fit-content;
+            min-height: 20px;
+            color: #000;
+            background: #f5f5f5;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            float: left;
+            margin: 5px;
+        }
+
+        .message-recieved {
+            width: 80%;
+            padding: 10px;
+            display: block;
+            float: right;
+            height: fit-content;
+            min-height: 20px;
+            color: white;
+            background: #333333;
+            border: none;
+            border-radius: 5px;
+            float: right;
+            margin: 5px;
+        }
+
+        .enter_message {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            bottom: 10px;
+            border-top: 1px solid rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+        }
+
+            .enter_message .input_container {
+                width: 400px;
+                height: 80%;
+                position: relative;
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                background: #f5f5f5;
+                color: black;
+                padding: 5px;
+                margin: 0 10px 0 5px;
+            }
+
+            .enter_message button {
+                width: 24px;
+                height: 24px;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                background: transparent;
+            }
+
+                .enter_message button img {
+                    width: 100%;
+                    height: 100%;
+                }
+        <!-- -->
+        /* compte styles*/
+
+    </style>
+    @RenderSection("Scripts", false/*required*/)
+</head>
+<body>
+    <div class="my_container">
+        <div class="my_nav">
+            <a id="compte" href="/Client1/Index"><img src="~/Content/resources/compte.png" /> Votre Compte</a>
+            <a id="commande" href="/Client1/Commande"><img src="~/Content/resources/commande.png" /> Vos Commandes</a>
+            <a id="message" href="/Client1/Message"><img src="~/Content/resources/message.png" /> Boite de reception</a>
+            <a id="disputes" href="/Client1/Disputes"><img src="~/Content/resources/cases.png" /> Vos disputes </a>
+            <a id="panier" href="/Client1/Panier"><img src="~/Content/resources/cart.png" /> Votre panier</a>
+            <a id="logout" href="/Client1/Logout"><img src="~/Content/resources/logout.png" /> logout</a>
+        </div>
+        <div class="box_info">
+            <div class="box_head">
+                <h2 id="title">Votre panier</h2>
+            </div>
+            <div class="box_body">
+                <!--
+
+                <div class="panier_container">
+                    <div class="product_container">
+                        <img src="~/Content/resources/prduct1.png" />
+                        <div class="sub_container">
+                            <h4>Anti bruit 10 bouchons d'oreilles en Silicone 5 paires</h4>
+                            <div>
+                                <select>
+                                    <option disabled>quantité</option>
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+
+                                <button>Remove</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="product_container">
+                        <img src="~/Content/resources/product2.png" />
+                        <div class="sub_container">
+                            <h4>Lampe de travail, Abat-jour Excellent pour Bureau et Maison</h4>
+                            <div>
+                                <select>
+                                    <option disabled>quantité</option>
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                                <button>Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product_container">
+                        <img src="~/Content/resources/product3.png" />
+                        <div class="sub_container">
+                            <h4>3 masques noirs Tissu premium - LAVABLE - tissu certifié IMANOR</h4>
+                            <div>
+                                <select>
+                                    <option disabled>quantité</option>
+                                    <option value="1" selected>1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                                <button>Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="commandes_container">
+                    <div class="product_container">
+                        <img src="~/Content/resources/prduct1.png" />
+                        <div class="sub_container">
+                            <h4>Anti bruit 10 bouchons doreilles en Silicone 5 paires</h4>
+                            <div>
+                                <h5>Total en MAD :34,60</h5> <button class="details_btn">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_container">
+                        <div class="head">Les articles</div>
+                        <div class="articles_container">
+                            <div class="article">
+                                <h4>Produit</h4>
+                                <h4>Prix</h4>
+                                <h4>Quantite</h4>
+                                <h4>Subtotal</h4>
+                            </div>
+                            <div class="article">
+                                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                <h4>15 MAD</h4>
+                                <h4>2</h4>
+                                <h4>30 MAD</h4>
+                            </div>
+                            <div class="article">
+                                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                <h4>15 MAD</h4>
+                                <h4>2</h4>
+                                <h4>30 MAD</h4>
+                            </div>
+                            <div class="article">
+                                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                <h4>15 MAD</h4>
+                                <h4>2</h4>
+                                <h4>30 MAD</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product_container">
+                        <img src="~/Content/resources/prduct1.png" />
+                        <div class="sub_container">
+                            <h4>Anti bruit 10 bouchons doreilles en Silicone 5 paires</h4>
+                            <div>
+                                <h5>Total en MAD :34,60</h5> <button class="details_btn">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_container">
+                        <div class="head">Les articles</div>
+                        <div class="articles_container">
+                            <div class="article">
+                                <h4>Produit</h4>
+                                <h4>Prix</h4>
+                                <h4>Quantite</h4>
+                                <h4>Subtotal</h4>
+                            </div>
+                            <div class="article">
+                                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                <h4>15 MAD</h4>
+                                <h4>2</h4>
+                                <h4>30 MAD</h4>
+                            </div>
+                            <div class="article">
+                                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                <h4>15 MAD</h4>
+                                <h4>2</h4>
+                                <h4>30 MAD</h4>
+                            </div>
+                            <div class="article">
+                                <h4>Anti bruit 10 bouchons doreilles e</h4>
+                                <h4>15 MAD</h4>
+                                <h4>2</h4>
+                                <h4>30 MAD</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="disputes_container">
+                    <div class="product_container">
+                        <img src="~/Content/resources/prduct1.png" />
+                        <div class="sub_container">
+                            <h4>Anti bruit 10 bouchons d'oreilles en Silicone 5 paires</h4>
+                            <div>
+                                <h5>Commande n:3460</h5>
+                                <button>En Attente</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="product_container">
+                        <img src="~/Content/resources/prduct1.png" />
+                        <div class="sub_container">
+                            <h4>Anti bruit 10 bouchons d'oreilles en Silicone 5 paires</h4>
+                            <div>
+                                <h5>Commande n:3460</h5>
+                                <button>Rejeté</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="product_container">
+                        <img src="~/Content/resources/prduct1.png" />
+                        <div class="sub_container">
+                            <h4>Anti bruit 10 bouchons d'oreilles en Silicone 5 paires</h4>
+                            <div>
+                                <h5>Commande n:3460</h5>
+                                <button>remboursé</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="messages_container">
+                    <ul>
+                        <li>
+                            <div class="chatList">
+                                <div class="img">
+                                    <i class="fa fa-circle"></i>
+                                    <img src="~/Content/resources/icon.png" class="mCS_img_loaded">
+                                </div>
+                                <div class="desc">
+                                    <small class="time">05:30 am</small>
+                                    <h5>Luis Yankee</h5>
+                                    <small>Lorem ipsum dolor sit amet...</small>
+                                    <button class="toggle_chat">
+                                        <img src="~/Content/resources/open_arrow.png" />
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chat_body">
+                                <div class="message-sent">
+                                    how much times it takes
+                                </div>
+                                <div class="message-recieved">
+                                    it depends
+                                </div>
+                                <div class="message-recieved">
+                                    but normally takes 3 days
+                                </div>
+                                <div class="message-sent">
+                                    ok i will buy it now.
+                                </div>
+                                <form class="enter_message">
+                                    <input class="input_container" type="text" placeholder="type a message" />
+                                    <button><img src="~/Content/resources/sendbtn.png" /> </button>
+
+                                </form>
+
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                -->
+                @RenderBody();
+            </div>
+
+        </div>
+
+    </div>
+    <div class="total_panier">
+        <h1>Tolal :  @ViewBag.somme DHS</h1>
+        <button value="@ViewBag.panierId" form="checkout_form" name="panierId">Finaliser commande</button>
+        <form action="/client1/checkout" id="checkout_form">
+        </form>
+    </div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,41 @@
+﻿@model projet1.ModelBD.client
+@{
+    ViewBag.Title = "Delete";
+    Layout = null;
+}
+
+@using (Html.BeginForm("Delete", "Client", FormMethod.Post, new { id = "popupForm" }))
+{
+    @Html.HiddenFor(a => a.id)
+<div style="text-align:center">
+    <div class="form-group">
+        <label>Nom</label>
+        <p>@Model.nom</p>
+    </div>
+
+    <div class="form-group">
+        <label>Prénom</label>
+        <p>@Model.prenom</p>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <p>@Model.email</p>
+    </div>
+
+    <div class="form-group">
+        <label>Téléphone</label>
+        <p>@Model.tel</p>
+    </div>
+    <div class="form-group">
+        <label>status</label>
+        <p>@Model.status</p>
+    </div>
+    <p style="margin-top:10px">Etes-vous sur de vouloir supprimer le client @Model.nom @Model.prenom?</p>
+
+    <div style="text-align:center">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </div>
+</div>
+        }
+

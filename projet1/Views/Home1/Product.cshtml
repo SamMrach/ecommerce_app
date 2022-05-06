@@ -1,0 +1,77 @@
+﻿@model ModelBD.produit
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/Content/product_page.css" />
+    <script src="~/Scripts/product_page.js" defer></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <div class="contact_form">
+        <div class="head">Envoyer un message</div>
+        <div class="body_form">
+            <div class="profil">
+                <button>
+                    <img src="~/Content/resources/authenticated.png" />
+                </button>
+                <h4>@Model.utilisateur.nom</h4>
+            </div>
+            <form class="message" action="/client1/contact">
+                <textarea name="message">
+
+                     </textarea>
+                <button name="proprietaireId" value="@Model.utilisateur.id">Envoyer</button>
+                
+            </form>
+        </div>
+    </div>
+    <section class="product-details">
+        <div class="image-slider">
+            <div class="product-images">
+                <img src="@Model.ImagePath.Replace("~","")" class="active" alt="">
+                <!--
+        <img src="~/Content/resources/product image 2.png" alt="">
+     <img src="~/Content/resources/product image 3.png" alt="">
+     <img src="~/Content/resources/product image 4.png" alt="">
+    -->
+            </div>
+        </div>
+        <div class="details">
+            <form action="/Client1/AjouterPanier" id="myForm" method="post">
+                <input type="hidden" name="id" value="@Model.ref_Id" />
+            </form>
+            <h2 class="product-brand">@Model.title</h2>
+            <p class="product-short-des">@Model.subtitle</p>
+            <span class="product-price">$@Model.prix </span>
+            <span class="product-actual-price">$200</span>
+            <span class="product-discount">( 50% off )</span>
+
+            <p class="product-sub-heading">choisir taille</p>
+
+            <input form="myForm" type="radio" name="size" value="S" hidden id="m-size">
+            <label for="m-size" class="size-radio-btn">S</label>
+            <input form="myForm" type="radio" name="size" value="M" hidden id="l-size">
+            <label for="l-size" class="size-radio-btn">M</label>
+            <input form="myForm" type="radio" name="size" value="L" hidden id="xl-size">
+            <label for="xl-size" class="size-radio-btn">L</label>
+            <input form="myForm" type="radio" name="size" value="XL" hidden id="xxl-size">
+            <label for="xxl-size" class="size-radio-btn">XL</label>
+
+            <button type="submit" form="myForm" class="btn">J'ACHETE</button>
+            <button type="button" class="btn" id="contacter" name="proprietaireId">Contacter</button>
+
+
+        </div>
+    </section>
+    <section class="detail-des">
+        <h2 class="heading">description</h2>
+        <p class="des">@Model.description</p>
+    </section>
+
+</body>
+</html>
+

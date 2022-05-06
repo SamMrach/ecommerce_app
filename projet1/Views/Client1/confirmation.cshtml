@@ -1,0 +1,39 @@
+﻿@model ModelBD.commande
+@{
+    ViewBag.Title = "confirmation";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<html>
+<head>
+    <style>
+        .thank_container {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .thank_container img {
+                width: 48px;
+                height: 48px;
+            }
+
+            .thank_container h2, h5 {
+                color: black;
+            }
+    </style>
+</head>
+<body>
+    <div class="thank_container">
+        <img src="~/Content/resources/done.png" />
+        <h2>Thank you <span>@TempData["name"]</span></h2>
+        
+        <h2>
+            Votre Commande Num @Model.reference_cmd est confirmé
+        </h2>
+    </div>
+</body>
+</html>
+

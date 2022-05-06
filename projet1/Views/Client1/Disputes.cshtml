@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ModelBD.reclamation>
+@{
+    ViewBag.Title = "Disputes";
+    Layout = "~/Views/Shared/_ClientLiyout.cshtml";
+}
+@section Scripts
+{
+    <script src="~/Scripts/disputes.js" )"></script>
+}
+<div class="disputes_container">
+    @foreach (var item in Model)
+    {  
+       <div class="product_container">
+            @{
+                ModelBD db = new ModelBD();
+                var commande = db.commandes_produits.Where(p => p.cmd_id == item.CommandeId).FirstOrDefault();
+            }
+        <img src="@commande.produit.ImagePath.Replace("~"," ")" />
+        <div class="sub_container">
+            <h4>@item.header</h4>
+            <div>
+                <h5>Commande n:<span>@item.commande.reference_cmd</span></h5>
+                <button>@item.status</button>
+            </div>
+
+        </div>
+    </div>
+     }
+
+    <!--
+
+        <div class="product_container">
+            <img src="~/Content/resources/prduct1.png" />
+            <div class="sub_container">
+                <h4>Anti bruit 10 bouchons d'oreilles en Silicone 5 paires</h4>
+                <div>
+                    <h5>Commande n:3460</h5>
+                    <button>Rejeté</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="product_container">
+            <img src="~/Content/resources/prduct1.png" />
+            <div class="sub_container">
+                <h4>Anti bruit 10 bouchons d'oreilles en Silicone 5 paires</h4>
+                <div>
+                    <h5>Commande n:3460</h5>
+                    <button>remboursé</button>
+                </div>
+
+            </div>
+        </div>
+
+    -->
+</div>
